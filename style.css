@@ -1,0 +1,452 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.container {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+h3 {
+    margin-bottom: 20px;
+}
+table {
+    width: 100%;
+}
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #45a049;
+}
+a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+<?php
+$host = "localhost";
+$user = "root"; // Username MySQL
+$password = ""; // Password MySQL
+$database = "admin_admin";
+
+// Membuat koneksi
+$conn = mysqli_connect($host, $user, $password, $database);
+
+// Tombol simpan jika di klik
+if(isset($_POST['tsimpan'])){
+
+    // Data akan disimpan
+    $simpan=mysqli_query($conn,"INSERT INTO tabel_masuk (kodeBarang, namaBarang, asalBarang, ukuranBarang, jumlahBarang, satuanBarang, tanggalMasuk) VALUES ('$_POST[tkode]', '$_POST[tnama]', '$_POST[tasal]', '$_POST[tukuran]', '$_POST[tjumlah]', '$_POST[tsatuan]', '$_POST[ttanggal]')");
+
+    // Uji simpan data sukses
+    if($simpan){
+        echo "<script>
+        alert('Simpan data sukses');
+        document.location='ds.php';
+        </script>";
+    } else {
+        echo "<script>
+        alert('Simpan data gagal');
+        document.location='ds.php';
+        </script>";
+    }
+}
+?>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Cahya Karunia Jaya</title>
+    <style>
+        .bg{
+        background-color: darkslategrey ;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+
+        }
+    .bg-dark-green {
+        background-color: #274e13; <!-- code warna abu-abu hitam kehijauan -->
+        color: white; /* agar teks kontras dan mudah dibaca */
+    }
+
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="container">
+        <h3 class="text-center">INPUT BARANG MASUK</h3>
+        <h3 class="text-center">GUDANG CKJ</h3>
+        <div class="row">
+            <div class="col-md-8 mx-auto" >
+                <div class="card">
+                    <div class="card-header bg-blue">
+                        Form Barang Masuk
+                    </div>
+                    <div class="card-body">
+
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label class="form-label">Kode barang</label>
+                                <input type=text nama="tkode" class="form-control"  placeholder="Masukan kode barang">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Nama Barang</label>
+                                <input type=text nama="tnama" class="form-control"  placeholder="Masukan Nama Barang">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Asal Barang</label>
+                                <input type=text nama="tasal" class="form-control"  placeholder="Asal Barang">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Ukuran Barang</label>
+                                <select class="form-select" name="tukuran">
+                                    <option>--pilih--</option>
+                                    <option value="Standar">Standar</option>
+                                    <option value="Jumbo">Jumbo</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label class="form-label">Jumlah</label>
+                                        <input type="number" nama="tjumlah" class="form-control" 
+                                        placeholder="Masukan Nama Barang">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="form-label">satuan</label>
+                                    <select class="form-select" name="tsatuan">
+                                        <option >--satuan--</option>
+                                        <option value="Lembar">Lembar</option>
+                                        <option value="Peti">Peti</option>
+                                    </select>
+                                </div>
+
+                            <div class="col">
+                                    <div class="mb-3">
+                                        <label class="form-label">Tanggal Terima</label>
+                                        <input type="date" nama="ttanggal" class="form-control">
+                                    </div>
+                            </div>
+                            </div>
+                            <div>
+                                <hr>
+                                <button class="btn btn-primary" name="tsimpan">SIMPAN</button>
+                                <button class="btn btn-danger" name="tkosongkan">KOSONGKAN</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-dark-green"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+    <div class="col-md-10 mx-auto" >
+                <div class="card mt-5">
+                    <div class="card-header bg-dark-green">
+                        Data Barang 
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-6 mx-auto">
+                            <form action="POST">
+                                <div class="input-group mb-3">
+                                    <input type="text" name="tcari" class="form-control" placeholder="massukan kata kunci">
+                                    <button class="btn btn-primary" name="bcari" type="submit">cari</button>
+                                    <button class="btn btn-danger" name="breset" type="submit">cari</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 mx-auto">
+                            <form method="POST">
+                                <div class="input-group mb-3">
+                                    <input type="text"name="tcari" class="form-control" placeholder="Masukkan kata kunci">
+                                    <button class="btn btn-primary" name= "bcari"type="submit">Cari</button>
+                                    <button class="btn btn-danger" name= "breset"type="submit">reset</button>
+                                </div>
+                            </form>
+                        </div>
+                        <table class="table table-striped table-hover table-bordered">
+                            <tr>
+                                <th>NO</th>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Asal Barang</th>
+                                <th>Jumlah Barang</th>
+                                <th>Tanggal Masuk</th>
+                            </tr>
+
+                            <?php
+                            $no = 0;
+                            $tampil=mysqli_query($conn,"SELECT * FROM tabel_masuk order by idBarang desc");
+                            while($data = mysqli_fetch_array ($tampil)){
+                            ?>
+                            <tr>
+                                <td><?= $no ++?>1</td>
+                                <td><?=$data['kodeBarang']?></td>
+                                <td><?=$data['namaBarang']?></td>
+                                <td><?=$data['asalBarang']?></td>
+                                <td><?=$data['jumlahBarang']?><?=$data['satuanBarang']?></td>
+                                <td><?=$data['tanggalMasuk']?></td>
+                                <td>
+                                    <a href="a"class="btn btn-warning">Edit</a>
+                                    <a href="a"class="btn btn-danger">Hapus</a>
+                                </td>
+                            </tr>
+                            <?php }?>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-dark-green"></div>
+                </div>
+            </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+<?php
+$host = "localhost";
+$user = "root"; // Username MySQL
+$password = ""; // Password MySQL
+$database = "admin_admin";
+
+// Membuat koneksi
+$conn = mysqli_connect($host, $user, $password, $database);
+
+// Tombol simpan jika di klik
+if(isset($_POST['tsimpan'])){
+
+    // Data akan disimpan
+    $simpan=mysqli_query($conn,"INSERT INTO tabel_masuk (kodeBarang, namaBarang, asalBarang, ukuranBarang, jumlahBarang, satuanBarang, tanggalMasuk) VALUES ('$_POST[tkode]', '$_POST[tnama]', '$_POST[tasal]', '$_POST[tukuran]', '$_POST[tjumlah]', '$_POST[tsatuan]', '$_POST[ttanggal]')");
+
+    // Uji simpan data sukses
+    if($simpan){
+        echo "<script>
+        alert('Simpan data sukses');
+        document.location='ds.php';
+        </script>";
+    } else {
+        echo "<script>
+        alert('Simpan data gagal');
+        document.location='ds.php';
+        </script>";
+    }
+}
+?>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Cahya Karunia Jaya</title>
+    <style>
+        .bg{
+        background-color: darkslategrey ;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+
+        }
+    .bg-dark-green {
+        background-color: #274e13; <!-- code warna abu-abu hitam kehijauan -->
+        color: white; /* agar teks kontras dan mudah dibaca */
+    }
+
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="container">
+        <h3 class="text-center">INPUT BARANG MASUK</h3>
+        <h3 class="text-center">GUDANG CKJ</h3>
+        <div class="row">
+            <div class="col-md-8 mx-auto" >
+                <div class="card">
+                    <div class="card-header bg-blue">
+                        Form Barang Masuk
+                    </div>
+                    <div class="card-body">
+
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label class="form-label">Kode barang</label>
+                                <input type="text" name="tkode" class="form-control"  placeholder="Masukan kode barang">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Nama Barang</label>
+                                <input type="text" name="tnama" class="form-control"  placeholder="Masukan Nama Barang">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Asal Barang</label>
+                                <input type="text" name="tasal" class="form-control"  placeholder="Asal Barang">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Ukuran Barang</label>
+                                <select class="form-select" name="tukuran">
+                                    <option>--pilih--</option>
+                                    <option value="Standar">Standar</option>
+                                    <option value="Jumbo">Jumbo</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label class="form-label">Jumlah</label>
+                                        <input type="number" name="tjumlah" class="form-control" 
+                                        placeholder="Masukan Nama Barang">
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <label class="form-label">Satuan</label>
+                                    <select class="form-select" name="tsatuan">
+                                        <option>--satuan--</option>
+                                        <option value="Lembar">Lembar</option>
+                                        <option value="Peti">Peti</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label">Tanggal Terima</label>
+                                    <input type="date" name="ttanggal" class="form-control">
+                                </div>
+                            </div>
+                            <div>
+                                <hr>
+                                <button class="btn btn-primary" name="tsimpan">SIMPAN</button>
+                                <button class="btn btn-danger" name="tkosongkan">KOSONGKAN</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-dark-green"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-10 mx-auto mt-5">
+        <div class="card">
+            <div class="card-header bg-dark-green">
+                Data Barang 
+            </div>
+            <div class="card-body">
+                <div class="col-md-6 mx-auto mb-3">
+                    <form method="POST">
+                        <div class="input-group">
+                            <input type="text" name="tcari" class="form-control" placeholder="Masukkan kata kunci">
+                            <button class="btn btn-primary" name="bcari" type="submit">Cari</button>
+                            <button class="btn btn-danger" name="breset" type="submit">Reset</button>
+                        </div>
+                    </form>
+                </div>
+                <table class="table table-striped table-hover table-bordered">
+                    <tr>
+                        <th>NO</th>
+                        <th>Kode Barang</th>
+                        <th>Nama Barang</th>
+                        <th>Asal Barang</th>
+                        <th>Jumlah Barang</th>
+                        <th>Tanggal Masuk</th>
+                    </tr>
+
+                    <?php
+                    $no = 1;
+                    $tampil = mysqli_query($conn, "SELECT * FROM tabel_masuk ORDER BY idBarang DESC");
+                    while ($data = mysqli_fetch_array($tampil)) {
+                    ?>
+                    <tr>
+                        <td><?= $no++ ?></td>
+                        <td><?= $data['kodeBarang'] ?></td>
+                        <td><?= $data['namaBarang'] ?></td>
+                        <td><?= $data['asalBarang'] ?></td>
+                        <td><?= $data['jumlahBarang'] . " " . $data['satuanBarang'] ?></td>
+                        <td><?= $data['tanggalMasuk'] ?></td>
+                        <td>
+                            <a href="a" class="btn btn-warning">Edit</a>
+                            <a href="a" class="btn btn-danger">Hapus</a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </table>
+            </div>
+            <div class="card-footer bg-dark-green"></div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
